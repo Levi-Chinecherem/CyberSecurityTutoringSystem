@@ -20,7 +20,7 @@ def video_search(request):
     context = {'videos': videos}
 
     if request.headers.get("X-Requested-With") == "XMLHttpRequest":
-        video_list_html = render_to_string('videos/video_search_results.html', context)
+        video_list_html = render_to_string('videos/video_search.html', context)
         return JsonResponse({'video_list_html': video_list_html})
     else:
         return render(request, 'videos/video_search.html', context)

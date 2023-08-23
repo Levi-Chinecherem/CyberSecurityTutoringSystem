@@ -85,6 +85,29 @@
                 }
             });
         });
+
+        $("#search-button").click(function() {
+            var query = $("input[name='query']").val();
+            var csrfToken = "{{ csrf_token }}";
+
+            $.ajax({
+                type: "POST",
+                url: "{% url 'video_search' %}",
+                data: {
+                    query: query,
+                    csrfmiddlewaretoken: csrfToken
+                },
+                success: function(response) {
+                    // Update the search results container with the retrieved HTML
+                    $("#search-results").html(response.video_list_html);
+                },
+                error: function(xhr, status, error) {
+                    // Handle error
+                    alert("An error occurred. Search results could not be loaded.");
+                }
+            });
+        });
+
     });
 </script>
 {% endblock %}
