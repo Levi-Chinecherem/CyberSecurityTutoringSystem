@@ -2,7 +2,7 @@
 
 Welcome to the Cyber Security Tutoring System! 🚀 This system is designed to help you learn about cybersecurity in a fun and interactive way. Whether you're a beginner or have some prior knowledge, this system has got you covered. Let's break down the key features and how to use it step by step:
 
-![Sample Image](image).
+![Sample Image](https://github.com/Levi-Chinecherem/CyberSecurityTutoringSystem/blob/main/sample1.png)
 
 ## Table of Contents
 
@@ -16,6 +16,8 @@ Welcome to the Cyber Security Tutoring System! 🚀 This system is designed to h
 - [License](#license)
 
 ## Key Features
+
+![Sample Image](https://github.com/Levi-Chinecherem/CyberSecurityTutoringSystem/blob/main/sample2.png)
 
 📚 **Lectures and Videos**: Access a wide range of cybersecurity lectures and videos to enhance your understanding.
 
