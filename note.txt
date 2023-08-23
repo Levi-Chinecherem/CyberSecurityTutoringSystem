@@ -1,0 +1,10 @@
+
+AVAILABLE USERS IN THE DATABASE
+
+Admin
+username: admin
+password: password123
+
+User
+username: user1
+password: first@USER1

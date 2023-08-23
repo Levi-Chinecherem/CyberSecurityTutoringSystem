@@ -1,0 +1,37 @@
+<!-- videos/templates/videos/saved_video.html -->
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Saved Video{% endblock %}
+{% block content %}
+<div class="flex">
+    <div class="w-95">
+        <h2 class="text-2xl font-semibold">{{ video.title }}</h2>
+        <div class="aspect-w-16 aspect-h-20">
+            <iframe src="{{ video.video_url }}" frameborder="0" allowfullscreen class="w-full h-full"></iframe>
+        </div>
+    </div>
+    <div class="w-5"></div>
+</div>
+<div class="bg-white p-4 mt-4 rounded shadow">
+    <p class="text-gray-800 font-semibold">Author: {{ video.author }}</p>
+    <p class="text-gray-800 font-semibold">Video URL: <a href="{{ video.video_url }}">{{ video.video_url }}</a></p>
+    <br>
+    <form method="post" action="{% url 'mark_as_unwatched' video.id %}" class="mt-2">
+        {% csrf_token %}
+        <button type="submit" class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600">
+            Mark as Unwatched
+        </button>
+    </form>
+    <form method="post" action="{% url 'mark_as_unsaved' video.id %}" class="mt-2">
+        {% csrf_token %}
+        <button type="submit" class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600">
+            Mark as Unsaved
+        </button>
+    </form>
+</div>
+<div class="bg-white p-4 mt-4 rounded shadow">
+    <pre class="text-gray-800 font-mono text-sm leading-relaxed" style="white-space: pre-wrap; overflow-wrap: break-word;">
+        {{ video.description }}
+    </pre>
+</div>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Saved Videos{% endblock %}
+
+{% block extra_head %}
+<style>
+   
+</style>
+{% endblock %}
+
+{% block content %}
+<h2 class="text-2xl font-semibold mb-4">Saved Videos</h2>
+<div class="video-grid grid gap-4 md:grid-cols-1 lg:grid-cols-2">
+    {% for video in saved_videos %}
+    <div class="bg-white p-4 rounded shadow">
+        <div class="flex space-x-4">
+            <img src="{{ video.thumbnail }}" alt="Thumbnail" class="w-16 h-16">
+            <div class="flex-1">
+                <h2 class="text-xl font-semibold">{{ video.title }}</h2>
+                <br>
+                <p class="text-gray-600">{{ video.description|truncatechars:150 }}</p>
+                <br>
+                <a href="{% url 'mark_as_unsaved' video.id %}" class="bg-red-500 text-white p-2 rounded ml-2 hover:bg-red-600 unsave-button" data-video-id="{{ video.id }}">Mark as Unsaved</a>
+                <a href="{% url 'video_detail' video.id %}" class="bg-blue-500 text-white p-2 rounded ml-2 hover:bg-blue-600">Details</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    $(document).ready(function() {
+        $(".unsave-button").click(function(event) {
+            event.preventDefault();
+            var videoId = $(this).data("video-id");
+
+            // Display a confirmation alert
+            var confirmation = confirm("Are you sure you want to mark this video as unsaved?");
+            if (confirmation) {
+                // Make an Ajax call to mark the video as unsaved
+                var csrfToken = "{{ csrf_token }}";
+                $.ajax({
+                    type: "POST",
+                    url: "{% url 'mark_as_unsaved' 0 %}".replace('0', videoId),
+                    data: {
+                        video_id: videoId,
+                        csrfmiddlewaretoken: csrfToken
+                    },
+                    success: function(response) {
+                        // Display a success message
+                        alert("Video marked as unsaved.");
+                        // Remove the video element from the page
+                        $(`.unsave-button[data-video-id='${videoId}']`).closest('.bg-white').remove();
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle error
+                        alert("An error occurred. Video could not be marked as unsaved.");
+                    }
+                });
+            }
+        });
+    });
+</script>
+{% endblock %}

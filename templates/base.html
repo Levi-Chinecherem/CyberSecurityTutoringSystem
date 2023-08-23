@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Cyber Security Tutoring System{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    {% block extra_head %}{% endblock %}
+    <style>
+        .push-down {
+            margin-top: 80px; /* Adjust this value based on your navigation bar's height */
+        }
+        .marginTop {
+            margin-top: -2rem; /* Adjust this value as needed */
+        }
+        .dark-mode-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background-color: #333;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+        }
+        .dark-mode-button i {
+            color: #fff;
+        }
+        .light-mode {
+            background-color: #f2f2f2;
+            color: #333;
+        }
+        .dark-mode {
+            background-color: #333;
+            color: #314199;
+        }
+        /* Styling for the footer */
+        .footer {
+            background-color: #333;
+            color: #f2f2f2;
+            padding: 20px;
+            text-align: center;
+            width: 100%; /* Set the width to 100% */
+            position: fixed;
+            bottom: 0; /* Stick the footer to the bottom */
+            left: 0; /* Align the footer to the left */
+
+        .dev{
+            font-size: 12px;
+        }
+
+        .footer a {
+            color: #f2f2f2;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer a:hover {
+            color: #ff9900;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 light-mode">
+    <div class="container mx-auto p-4">
+        <div class="fixed top-0 left-0 w-full bg-white shadow-md p-4 flex justify-between items-center">
+            <h1 class="text-3xl font-semibold">Cyber Home</h1>
+            <div class="md:hidden relative">
+                <button id="nav-toggle" class="text-gray-600 hover:text-blue-500">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        
+        <main>
+            <div class="push-down">
+            </div>
+            {% block content %}{% endblock %}
+        </main>
+        
+        <div id="hidden-nav" class="hidden md:block absolute top-12 right-0 marginTop mr-8 bg-white py-2 px-4 shadow-lg rounded">
+            <ul id="nav-list" class="md:flex space-x-4">
+                <li><a href="{% url 'index' %}" class="btn btn-blue hover:text-blue-500 transition">Home</a></li>
+                {% if user.is_authenticated %}
+                <li><a href="{% url 'video_search' %}" class="btn btn-blue hover:text-blue-500 transition">Lectures</a></li>
+                <li><a href="{% url 'watched_videos' %}" class="btn btn-blue hover:text-blue-500 transition">Watched Videos</a></li>
+                <li><a href="{% url 'saved_videos' %}" class="btn btn-blue hover:text-blue-500 transition">Saved Videos</a></li>
+                <!-- Add more authenticated navigation links if needed -->
+                <li><a href="{% url 'logout' %}" class="btn btn-red hover:text-red-500 transition">Logout</a></li>
+                {% else %}
+                <li><a href="{% url 'login' %}" class="btn btn-blue hover:text-blue-500 transition">Login</a></li>
+                <li><a href="{% url 'signup' %}" class="btn btn-green hover:text-green-500 transition">Signup</a></li>
+                {% endif %}
+            </ul>
+        </div>
+
+        <button id="dark-mode-toggle" class="dark-mode-button">
+            <i class="fas fa-adjust"></i>
+        </button>
+
+        <div class="push-down">
+        </div>
+
+        <div class="footer">
+            <p class="dev">&copy; 2023 Levi Chinecherem Chidi | SemanticDev</p>
+            <a href="https://www.github.com/Levi-Chinecherem/" target="_blank" rel="noopener noreferrer">
+                <i class="fab fa-github"></i> GitHub
+            </a>
+        </div>
+
+        <script>
+            $(document).ready(function() {
+                $("#dark-mode-toggle").click(function() {
+                    $("body").toggleClass("dark-mode");
+                });
+            });
+        </script>
+        
+        <script>
+            $(document).ready(function() {
+                $("#nav-toggle").click(function() {
+                    $("#hidden-nav").toggleClass("hidden");
+                });
+            });
+        </script>
+        {% block extra_scripts %}{% endblock %}
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ video.title }} - Video Detail{% endblock %}
+{% block extra_head %}
+<style>
+    .aspect-h-20::before {
+        content: '';
+        display: block;
+        padding-top: 3%; /* 20% of the viewport height */
+    }
+    .video-detail-container {
+        max-width: 800px; /* Adjust the max-width as needed */
+        margin: 0 auto;
+    }
+</style>
+{% endblock %}
+{% block content %}
+<div class="flex justify-center">
+    <div class="w-95 video-detail-container">
+        <h2 class="text-2xl font-semibold">{{ video.title }}</h2>
+        <div class="aspect-w-16 aspect-h-20">
+            <iframe src="{{ video.video_url }}" frameborder="0" allowfullscreen class="w-full h-full"></iframe>
+        </div>
+    </div>
+</div>
+<div class="bg-white p-4 mt-4 rounded shadow video-detail-container">
+    <p class="text-gray-800 font-semibold">Author: {{ video.author }}</p>
+    <p class="text-gray-800 font-semibold">Video URL: <a href="{{ video.video_url }}">{{ video.video_url }}</a></p>
+    <!-- You can display other fields here as well -->
+
+    {% if video.watched %}
+    <form method="post" action="{% url 'mark_as_unwatched' video.id %}" class="mt-2">
+        {% csrf_token %}
+        <button type="button" class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600" id="unwatch-button">
+            Mark as Unwatched
+        </button>
+    </form>
+    {% else %}
+    <form method="post" action="{% url 'mark_as_watched' video.id %}" class="mt-2">
+        {% csrf_token %}
+        <button type="button" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600" id="watch-button">
+            Mark as Watched
+        </button>
+    </form>
+    {% endif %}
+</div>
+
+<div class="bg-white p-4 mt-4 rounded shadow video-detail-container">
+    <pre class="text-gray-800 font-mono text-sm leading-relaxed" style="white-space: pre-wrap; overflow-wrap: break-word;">
+        {{ video.description }}
+    </pre>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{% static 'js/video_detail.js' %}"></script>
+<script>
+    $(document).ready(function() {
+        $("#watch-button").click(function() {
+            var confirmation = confirm("Mark this video as watched?");
+            if (confirmation) {
+                $(this).closest("form").submit();
+            }
+        });
+
+        $("#unwatch-button").click(function() {
+            var confirmation = confirm("Mark this video as unwatched?");
+            if (confirmation) {
+                $(this).closest("form").submit();
+            }
+        });
+    });
+</script>
+{% endblock %}

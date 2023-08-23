@@ -1,0 +1,71 @@
+<!-- templates/index.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+    <!-- Hero Section -->
+    <section class="bg-blue-600 text-white py-16">
+        <div class="container mx-auto text-center">
+            <h1 class="text-4xl font-semibold mb-4">Welcome to the Cyber Security Tutoring System</h1>
+            <p class="text-lg mb-8">Empowering students with essential cyber security knowledge and skills.</p>
+            <a href="#features" class="bg-white text-blue-600 py-2 px-6 rounded-lg font-semibold hover:bg-blue-100 transition duration-300">Learn More</a>
+        </div>
+    </section>
+
+    <!-- System Details -->
+    <section id="features" class="bg-white py-16">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl font-semibold mb-6">System Details</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Feature 1: Cyber Security Tutoring Content -->
+                <div class="bg-gray-100 p-6 rounded shadow">
+                    <h3 class="text-lg font-semibold mb-2">Cyber Security Tutoring Content</h3>
+                    <p class="text-gray-600">
+                        Our system provides a comprehensive collection of cyber security tutorials, lectures, and videos.
+                        These resources cover a wide range of topics, including network security, encryption, ethical hacking,
+                        and more. Whether you're a beginner or an expert, our content caters to all levels of expertise.
+                    </p>
+                </div>
+
+                <!-- Feature 2: Interactive Learning Experience -->
+                <div class="bg-gray-100 p-6 rounded shadow">
+                    <h3 class="text-lg font-semibold mb-2">Interactive Learning Experience</h3>
+                    <p class="text-gray-600">
+                        Learning cyber security is made engaging with our interactive learning experience. Our video tutorials
+                        are supplemented with quizzes, challenges, and hands-on exercises that allow you to apply your knowledge
+                        in real-world scenarios. You'll gain practical skills and be better prepared to tackle cyber threats.
+                    </p>
+                </div>
+
+                <!-- Feature 3: User Progress Tracking -->
+                <div class="bg-gray-100 p-6 rounded shadow">
+                    <h3 class="text-lg font-semibold mb-2">User Progress Tracking</h3>
+                    <p class="text-gray-600">
+                        Stay organized and monitor your progress with our user-friendly progress tracking feature. Keep track of
+                        the videos you've watched, quizzes you've completed, and challenges you've conquered. Our system helps
+                        you set and achieve learning goals to enhance your cyber security knowledge.
+                    </p>
+                </div>
+
+                <!-- Add more features about your system -->
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Helps Students -->
+    <section class="bg-gray-100 py-16">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl font-semibold mb-6">How the Cyber Security Tutoring System Helps Students</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-semibold mb-4">Comprehensive Curriculum</h3>
+                    <p class="text-gray-700">Our system offers a comprehensive curriculum covering various aspects of cyber security, from basics to advanced topics.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-semibold mb-4">Interactive Learning</h3>
+                    <p class="text-gray-700">Engage in interactive learning experiences through real-world simulations and hands-on exercises.</p>
+                </div>
+                <!-- Add more benefits here -->
+            </div>
+        </div>
+    </section>
+{% endblock %}

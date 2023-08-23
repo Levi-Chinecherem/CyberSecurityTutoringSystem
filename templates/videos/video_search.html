@@ -1,0 +1,90 @@
+<!-- videos/templates/videos/video_search.html -->
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Video Search{% endblock %}
+{% block content %}
+<form id="search-form" class="mb-4">
+    {% csrf_token %}
+    <input type="text" name="query" placeholder="Search videos" class="p-2 rounded">
+    <button type="submit" class="bg-blue-500 text-white p-2 rounded ml-2">Search</button>
+</form>
+<ul id="video-list" class="space-y-4 video-grid grid gap-4 md:grid-cols-2 lg:grid-cols-2">
+    {% for video in videos %}
+    <li class="bg-white p-4 rounded shadow">
+        <div class="flex space-x-4">
+            <img src="{{ video.thumbnail }}" alt="Thumbnail" class="w-16 h-16">
+            <div class="flex-1">
+                <h2 class="text-xl font-semibold">{{ video.title }}</h2>
+                <br>
+                <p class="text-gray-600">{{ video.description|truncatechars:150 }}</p>
+                <br>
+                {% if video.saved %}
+                <button class="bg-red-500 text-white p-2 rounded ml-2 unsave-button" data-video-id="{{ video.id }}">Mark as Unsaved</button>
+                <button class="bg-green-500 text-white p-2 rounded ml-2 save-button hidden" data-video-id="{{ video.id }}">Save Video</button>
+                {% else %}
+                <button class="bg-green-500 text-white p-2 rounded ml-2 save-button" data-video-id="{{ video.id }}">Save Video</button>
+                <button class="bg-red-500 text-white p-2 rounded ml-2 unsave-button hidden" data-video-id="{{ video.id }}">Mark as Unsaved</button>
+                {% endif %}
+                <a href="{% url 'video_detail' video.id %}" class="bg-blue-500 text-white p-2 rounded ml-2 hover:bg-blue-600">Details</a>
+            </div>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    $(document).ready(function() {
+        $(".save-button").click(function(event) {
+            event.preventDefault();
+            var videoId = $(this).data("video-id");
+            var csrfToken = "{{ csrf_token }}";
+
+            $.ajax({
+                type: "POST",
+                url: "{% url 'save_video' 0 %}".replace('0', videoId),  // Replace with the correct URL
+                data: {
+                    video_id: videoId,
+                    csrfmiddlewaretoken: csrfToken
+                },
+                success: function(response) {
+                    // Display an alert when video is saved
+                    alert("Video is saved!");
+                    $(".save-button[data-video-id='" + videoId + "']").addClass("hidden");
+                    $(".unsave-button[data-video-id='" + videoId + "']").removeClass("hidden");
+                },
+                error: function(xhr, status, error) {
+                    // Handle error
+                    alert("An error occurred. Video could not be saved.");
+                }
+            });
+        });
+
+        $(".unsave-button").click(function(event) {
+            event.preventDefault();
+            var videoId = $(this).data("video-id");
+            var csrfToken = "{{ csrf_token }}";
+
+            $.ajax({
+                type: "POST",
+                url: "{% url 'mark_as_unsaved' 0 %}".replace('0', videoId),  // Replace with the correct URL
+                data: {
+                    video_id: videoId,
+                    csrfmiddlewaretoken: csrfToken
+                },
+                success: function(response) {
+                    // Display an alert when video is unsaved
+                    alert("Video is unsaved!");
+                    $(".unsave-button[data-video-id='" + videoId + "']").addClass("hidden");
+                    $(".save-button[data-video-id='" + videoId + "']").removeClass("hidden");
+                },
+                error: function(xhr, status, error) {
+                    // Handle error
+                    alert("An error occurred. Video could not be unsaved.");
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}
